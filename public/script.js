@@ -71,6 +71,9 @@ if(addUser){
       document.getElementById('username').value=''
       document.getElementById('role').value=''
       document.getElementById('password').value=''
+      setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
     }else{ 
       alert('Failed to add User')
           return
@@ -113,6 +116,9 @@ fetch('/addStock',{
  document.getElementById('materialType').value=''
  document.getElementById('quantity').value=''
  document.getElementById('date').value=''
+  setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
   }else{
     return alert('Failed to add Stock please try again......')
   }
@@ -205,6 +211,9 @@ fetch('/giveOutMaterials',{
     document.getElementById('materialType').value=''
     document.getElementById('quantity').value=''
     document.getElementById('date').value=''
+     setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
   }else{
     return alert('Sorry materials are not Enough.....')
   }
