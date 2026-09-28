@@ -25,7 +25,50 @@
 <button type="submit">Add User</button>
     </form>
  
+<script>
+    // add user
+const addUser=document.getElementById('addUser')
+if(addUser){
+  addUser.addEventListener('submit',(e)=>{
+    e.preventDefault()
+  const username=document.getElementById('username').value
+  const role=document.getElementById('role').value
+  const password=document.getElementById('password').value
+  if(!username || !role || !password){
+    return alert('All fields are required')
+  }
+ fetch('/addUser',{
+    method:'post',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({username:username,role:role,password:password})
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+      alert('user added successsfully')
+      document.getElementById('username').value=''
+      document.getElementById('role').value=''
+      document.getElementById('password').value=''
+      setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
+    }else{ 
+      alert('Failed to add User')
+          return
+        }
+  }).catch(error=>{
+    console.log(error)
+    return
+  })
+})
+}
 
- <script src="script.js"></script>
+const addUserRole=document.getElementById('addUser')
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin'){
+  addUserRole.style.pointerEvents='none'
+  addUserRole.style.opacity=0.5
+}
+</script>
+ <!-- <script src="script.js"></script> -->
 </body>
 </html>

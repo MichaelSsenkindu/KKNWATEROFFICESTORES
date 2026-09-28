@@ -45,6 +45,16 @@ if(loginForm){
         setTimeout(() => {
           window.location='dashboard.html'  
         }, 2000);
+//pointerevents
+const addUser=document.getElementById('addUser')
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin'){
+  addUser.style.pointerEvents='none'
+  addUser.style.opacity=0.5
+}
+
+
+
   }
   })
  })
@@ -136,17 +146,8 @@ function logout(){
 const workRole=localStorage.getItem('role')
 const loginUser=localStorage.getItem('username')
 document.getElementById('welcomeMsg').textContent=`Welcome to KKN WATER OFFICE STORES ${loginUser}---${workRole}`
-const userForm=document.getElementById('addUser')
-//pointerevents
-// function userWorks(){
-// const userRights=localStorage.get('username')
-// if(userRights !=="Admin"){
-//   const username=document.getElementById("username").value
-//   username.style.pointerEvents='none'
-//   username.style.opacity=0.5
-// }
-// }
-// userWorks()
+// const userForm=document.getElementById('addUser')
+
 //home display
  function displayHome(){
   window.location='dashboard.html'
