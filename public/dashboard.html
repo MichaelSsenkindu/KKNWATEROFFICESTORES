@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="sidebar" class="sidebar">
+    <h3>Menu</h3>
+    <div class="menuGroups">
+<button onclick="displayHome()">Home</button>
+</div>
+<div class="menuGroups">
+<button onclick="toggle('stockManagement')">Stock Management</button>
+<div id="stockManagement" class="subMenu" hidden>
+<a href="addStock.html">Add Stock</a>
+<a href="#">Edit Stock</a>
+<a href="#">Delete Stock</a>
+<a href="viewStock.html">View Stock</a>
+<a href="giveOutMaterial.html">Give out Materials</a>
+
+</div>
+</div> 
+<div class="menuGroups">
+<button onclick="toggle('jobCards')">Job Cards</button>
+<div id="jobCards" class="subMenu" hidden>
+<a href="#">Add Jobs</a>
+<a href="#">Edit Jobs</a>
+<a href="#">Delete Jobs</a>
+<a href="#">View Jobs</a>
+<a href="#">View Pending Jobs</a>
+<a href="#">View Completed Jobs</a>
+</div>
+</div> 
+
+<div class="menuGroups">
+<button onclick="toggle('users')">Users</button>
+<div id="users" class="subMenu" hidden>
+<a href="users.html">Add User</a>
+<a href="#">Edit User</a>
+<a href="#">Delete User</a>
+<a href="viewUsers.html">View User</a>
+<a href="#">Disable User</a>
+</div>
+</div>
+<div class="menuGroups">
+<button onclick="toggle('reports')">Reports</button>
+<div id="reports" class="subMenu" hidden>
+<a href="#">Total Materials Stocked </a>
+<a href="#">Total Materials avalaible</a>
+<a href="#">Total Materials Used</a>
+</div>
+</div>
+</div>
+<main>
+    <div class="titles">
+    <h2>UWS-C, KKN WATER OFFICE STORE</h2>
+    <h1 id="welcomeMsg">welcome </h1><button onclick="logout()">Logout</button>
+    
+    </div>
+<div class="cards">
+<div class="card">
+    <h2>OD20mm Materials</h2>
+    <div id="couplersOD20mm" style="margin: 10px;">0</div>
+    <div id="pipesOD20mm" style="margin: 10px;">0</div>
+</div>
+
+<div class="card">
+    <h2>OD25mm Materials</h2>
+    <div id="couplersOD25mm" style="margin: 10px;">0</div>
+    <div id="pipesOD25mm" style="margin: 10px;">0</div>
+</div>
+<div class="card">
+    <h2>OD32mm Materials</h2>
+    <div id="couplersOD32mm" style="margin: 10px;">0</div>
+    <div id="pipesOD32mm" style="margin: 10px;">0</div>
+</div>
+<div class="card">
+    <h2>OD40mm Materials</h2>
+    <div id="couplersOD40mm" style="margin: 10px;">0</div>
+    <div id="pipesOD40mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>OD50mm Materials</h2>
+    <div id="couplersOD50mm" style="margin: 10px;">0</div>
+    <div id="pipesOD50mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>OD63mm Materials</h2>
+    <div id="couplersOD63mm" style="margin: 10px;">0</div>
+    <div id="pipesOD63mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>OD75mm Materials</h2>
+    <div id="couplersOD75mm" style="margin: 10px;">0</div>
+    <div id="pipesOD75mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>OD90mm Materials</h2>
+    <div id="couplersOD90mm" style="margin: 10px;">0</div>
+    <div id="pipesOD90mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>D110mm Materials</h2>
+    <div id="couplersOD110mm" style="margin: 10px;">0</div>
+    <div id="pipesOD110mm" style="margin: 10px;">0</div>
+</div><div class="card">
+    <h2>D160mm Materials</h2>
+    <div id="couplersOD160mm" style="margin: 10px;">0</div>
+    <div id="pipesOD160mm" style="margin: 10px;">0</div>
+</div>
+
+</div>
+
+</main>
+
+
+
+
+
+
+
+
+ <script src="script.js"></script> 
+</body>
+</html>

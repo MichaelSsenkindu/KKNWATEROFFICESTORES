@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available stock</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="availableStock">
+    <h2>Available stock</h2>
+    <div id="availableStock"></div>
+    </div>
+  <script>
+
+
+function viewStock(){
+  const stockList=document.getElementById('availableStock')
+  stockList.innerHTML=''
+  fetch('/viewStock',{
+    method:'get'
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+data.availableStocks.forEach((availableStock,i) => {
+    const li=document.createElement('li')
+    li.textContent=`${i+1}.${availableStock.materialName}  ${availableStock.materialSize}------${availableStock.quantity}`
+    stockList.appendChild(li)
+  });
+    }else{return alert('no Stock found')}
+   
+  })
+  
+}
+viewStock()
+  </script>
+</body>
+</html>

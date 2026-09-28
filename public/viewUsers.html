@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Users</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="viewUsers">
+<h1>Available Users</h1>
+<div id="usersList">dfetgujiko</div>
+</div>
+<script>
+//  viewUsers
+ function viewUsers(){
+  const usersList=document.getElementById('usersList')
+  usersList.innerHTML=''
+  fetch('/viewUsers',{
+    method:'GET'
+  })
+  .then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+       console.log(data)
+    data.users.forEach((user,i) => {
+      const li=document.createElement('li')
+      li.textContent=`${i+1}.${user.username}--${user.role}`
+      usersList.appendChild(li)
+    });
+    }else{usersList.textContent='No users Found'}
+  })
+ }
+ viewUsers()
+
+
+</script>
+</body>
+</html>
