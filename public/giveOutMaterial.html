@@ -18,7 +18,7 @@
 <body>
 
     
-    <div class="giveOutMaterials">
+    <div class="giveOutMaterials" id="giveOutMaterials">
     <h2>Give Out Mateials</h2>
 <label for="name">GIVEN TO:</label>
 <input type="text" id="givenTo" placeholder="Enter Names">
@@ -60,9 +60,55 @@
 <hr>
 <button onclick="giveOutMaterials()">Give Out Materials</button>
 </div>
-   <script src="script.js"></script> 
+<script>
+    //giveOutMaterials
+
+function giveOutMaterials(){
+const GIVENTO=document.getElementById('givenTo').value
+const materialName=document.getElementById('materialName').value
+const materialSize=document.getElementById('materialSize').value
+const materialType=document.getElementById('materialType').value
+const quantity=document.getElementById('quantity').value
+const date=document.getElementById('date').value
+
+if(!GIVENTO || !materialName ||!materialSize || !materialType || !quantity || !date){
+  return alert('all fields are required')
+}
+fetch('/giveOutMaterials',{
+  method:'post',
+  headers:{'Content-Type': 'application/json'},
+  body:JSON.stringify({
+    GIVENTO:GIVENTO,materialName:materialName,materialSize:materialSize,materialType:materialType,quantity:quantity,date:date
+  })
+}).then(res=>res.json())
+.then(data=>{
+  if(data.success){
+    alert('Materials given out successfully')
+    document.getElementById('givenTo').value=''
+    document.getElementById('materialName').value=''
+    document.getElementById('materialSize').value=''
+    document.getElementById('materialType').value=''
+    document.getElementById('quantity').value=''
+    document.getElementById('date').value=''
+     setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
+  }else{
+    return alert('Sorry materials are not Enough.....')
+  }
+}).catch(error=>{
+  console.log(error)
+  return
+})
+}
+const addUserRole=document.getElementById('giveOutMaterials')
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin' && userRole !=='Operations Manager'){
+  addUserRole.style.pointerEvents='none'
+  addUserRole.style.opacity=0.5
+}
+</script>
+   <!-- <script src="script.js"></script>  -->
 </body>
 </html>
- <script src="script.js"></script>   
-</body>
-</html>
+ 
