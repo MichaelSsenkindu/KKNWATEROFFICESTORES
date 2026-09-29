@@ -31,7 +31,7 @@ const addUser=document.getElementById('addUser')
 if(addUser){
   addUser.addEventListener('submit',(e)=>{
     e.preventDefault()
-  const username=document.getElementById('username').value
+  const username=document.getElementById('username').value.toLowerCase().trim()
   const role=document.getElementById('role').value
   const password=document.getElementById('password').value
   if(!username || !role || !password){
@@ -52,7 +52,7 @@ if(addUser){
         window.location='dashboard.html'
       }, 2000);
     }else{ 
-      alert('Failed to add User')
+      alert(data.message)
           return
         }
   }).catch(error=>{

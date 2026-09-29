@@ -18,12 +18,12 @@ const loginForm=document.getElementById('loginForm')
 if(loginForm){
     loginForm.addEventListener('submit',(e)=>{
         e.preventDefault()
-        const username=document.getElementById('username').value
+        const username=document.getElementById('username').value.toLowerCase().trim()
         const password=document.getElementById('password').value
         const loginMsg=document.getElementById('loginMsg')
         if(!username || !password){
             loginMsg.style.color='red'
-            loginMsg.textContent='Invalid Username/Password'
+            loginMsg.textContent='All fields are required..!'
             setTimeout(() => {
             loginMsg.style.color='black'
             loginMsg.textContent='Please Login' 
@@ -45,54 +45,22 @@ if(loginForm){
         setTimeout(() => {
           window.location='dashboard.html'  
         }, 2000);
-//pointerevents
-const addUser=document.getElementById('addUser')
-const userRole=localStorage.getItem('role')
-if(userRole !=='Admin'){
-  addUser.style.pointerEvents='none'
-  addUser.style.opacity=0.5
+
+}else{
+  loginMsg.style.color='red'
+  loginMsg.textContent='Invalid Username/Password'
+  setTimeout(() => {
+    loginMsg.style.color='black'
+    loginMsg.textContent='Please Login' 
+            }, 2000);
+            return
+        
+
 }
 
 
-
-  }
   })
  })
-}
-// add user
-const addUser=document.getElementById('addUser')
-if(addUser){
-  addUser.addEventListener('submit',(e)=>{
-    e.preventDefault()
-  const username=document.getElementById('username').value
-  const role=document.getElementById('role').value
-  const password=document.getElementById('password').value
-  if(!username || !role || !password){
-    return alert('All fields are required')
-  }
- fetch('/addUser',{
-    method:'post',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({username:username,role:role,password:password})
-  }).then(res=>res.json())
-  .then(data=>{
-    if(data.success){
-      alert('user added successsfully')
-      document.getElementById('username').value=''
-      document.getElementById('role').value=''
-      document.getElementById('password').value=''
-      setTimeout(() => {
-        window.location='dashboard.html'
-      }, 2000);
-    }else{ 
-      alert('Failed to add User')
-          return
-        }
-  }).catch(error=>{
-    console.log(error)
-    return
-  })
-})
 }
 
 // add stock
@@ -137,6 +105,12 @@ fetch('/addStock',{
   return 
 })
 
+}
+const addUserRole=document.getElementById('addStockContainer')
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin' && userRole !=='Operations Manager'){
+  addUserRole.style.pointerEvents='none'
+  addUserRole.style.opacity=0.5
 }
 // logout
 function logout(){
@@ -183,48 +157,7 @@ document.getElementById('pipesOD160mm').textContent=`Pipes: ${data.totalPipe160m
     }})}
 
 couplersOD20mm()
-//giveOutMaterials
 
-function giveOutMaterials(){
-const GIVENTO=document.getElementById('givenTo').value
-const materialName=document.getElementById('materialName').value
-const materialSize=document.getElementById('materialSize').value
-const materialType=document.getElementById('materialType').value
-const quantity=document.getElementById('quantity').value
-const date=document.getElementById('date').value
-
-if(!GIVENTO || !materialName ||!materialSize || !materialType || !quantity || !date){
-  return alert('all fields are required')
-}
-fetch('/giveOutMaterials',{
-  method:'post',
-  headers:{'Content-Type': 'application/json'},
-  body:JSON.stringify({
-    GIVENTO:GIVENTO,materialName:materialName,materialSize:materialSize,materialType:materialType,quantity:quantity,date:date
-  })
-}).then(res=>res.json())
-.then(data=>{
-  if(data.success){
-    alert('Materials given out successfully')
-    document.getElementById('givenTo').value=''
-    document.getElementById('materialName').value=''
-    document.getElementById('materialSize').value=''
-    document.getElementById('materialType').value=''
-    document.getElementById('quantity').value=''
-    document.getElementById('date').value=''
-     setTimeout(() => {
-        window.location='dashboard.html'
-      }, 2000);
-  }else{
-    return alert('Sorry materials are not Enough.....')
-  }
-}).catch(error=>{
-  console.log(error)
-  return
-})
-
-
-}
 
 function viewStock(){
 

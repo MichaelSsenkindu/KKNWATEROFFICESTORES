@@ -27,11 +27,14 @@ async function addUser(req,res) {
     if(!username || !role || !password ){
         return res.json({success:false})
     }
+    const cleanUsername=username.toLowerCase().trim()
     try {
-       const newUser=await loginModel.create({username:username,role:role,password:password})
-       if(newUser){
-res.json({success:true})
-       }
+const existingUser=await loginModel.findOne({username})
+    if(!existingUser){
+ await loginModel.create({username:cleanUsername,role:role,password:password})
+ res.json({success:true})
+    }else{return res.json({success:false,message:'Username already exists, try another one..!'})}
+      
        
     } catch (error) {
         console.log(error)
@@ -44,21 +47,24 @@ const {username,password}=req.body
 if(!username || !password){
     return res.json({success:false})
 }
+const cleanUsername=username.toLowerCase().trim()
 try {
-const admin=await adminModel.findOne({username:username,password:password})
+const admin=await adminModel.findOne({username:cleanUsername,password:password})
 if(admin){
     res.json({success:true,username:admin.username,role:admin.role})
 }
-const user=await loginModel.findOne({username:username,password:password}) 
+
+const user=await loginModel.findOne({username:cleanUsername,password:password}) 
 if(user){
 res.json({success:true,username:user.username,role:user.role})
 }
-   
-} catch (error) {
+}catch(error){
     console.log(error)
     return res.json({success:false})
 }
+
 }
+
 // view users
 async function viewUsers(req,res){
     try {
