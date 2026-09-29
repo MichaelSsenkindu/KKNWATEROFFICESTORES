@@ -40,7 +40,7 @@ if(signupForm){
         signupMsg.style.color='green'
         signupMsg.textContent='Signup successfull please wait.....'
         setTimeout(() => {
-          window.location='dashboard.html'  
+          window.location='login.html'  
         }, 2000);
 
 }else{
