@@ -48,7 +48,7 @@ button {width: 100%;height: 47px;margin-top: 10px;border: none;border-radius: 6p
     #role{font-size: 20px;text-align: center;width: 100%;padding: 10px;border-radius: 10px;border: none;outline: none;cursor: pointer;}
     h1{text-align: center;font-weight: bold;margin: 10px;padding: 20px;}
 }
-#loginForm{
+#loginForm,#signupForm{
     
     background: white; align-items: center;justify-content: center;width: 600px;height: auto;padding: 30px;border-radius:10px;
     input{font-size: 20px;text-align: center;width: 100%;padding: 10px;border-radius: 10px;border: 1px solid black;outline: none;}
@@ -65,7 +65,11 @@ h1{text-align: center;padding: 20px;font-weight: bold;}
 .availableStock{
     li{list-style: none;margin: 20px;}
 }
-
+p{display: flex;align-items: center;justify-content: center;font-weight: bold;
+a{text-decoration: none;margin: 20px;font-size: 20px;font-weight: bold;}
+}
+#signupForm{
+    .role{background-color:black;color: white;font-weight: bold;}}
 
 /* =========================
    TABLET
@@ -172,34 +176,34 @@ h1{text-align: center;padding: 20px;font-weight: bold;}
         }
     }
 
-    #loginForm {
+    #loginForm,#signupForm {
         width: 90%;
         padding: 25px 20px;
         margin: 40px auto;
     }
 
-    #loginForm h1 {
+    #loginForm h1,#signupForm h1 {
         font-size: 25px;
         text-align: center;
     }
 
-    #loginForm h2 {
+    #loginForm h2,#signupForm h2 {
         font-size: 20px;
         text-align: center;
     }
 
-    #loginForm label {
+    #loginForm label,#signupForm label {
         font-size: 16px;
     }
 
-    #loginForm input {
+    #loginForm input,#signupForm input {
         width: 100%;
         box-sizing: border-box;
         font-size: 16px;
         padding: 12px;
     }
 
-    #loginForm button {
+    #loginForm button,#signupForm button {
         width: 100%;
         padding: 12px;
         font-size: 16px;

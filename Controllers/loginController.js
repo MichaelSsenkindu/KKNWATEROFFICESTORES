@@ -41,7 +41,29 @@ const existingUser=await loginModel.findOne({username})
         return res.json({success:false})
     }
 }
+//signup user
+async function signup(req,res){
+const {username,role,password}=req.body
+    if(!username || !role || !password ){
+        return res.json({success:false})
+    }
+    const cleanUsername=username.toLowerCase().trim()
+    try {
+const existingUser=await loginModel.findOne({username:cleanUsername})
+    if(!existingUser){
+ await loginModel.create({username:cleanUsername,role:role,password:password})
+ res.json({success:true})
+    }else{return res.json({success:false,message:'Username already exists, try another one..!'})}
+      
 
+
+}catch(error){
+    console.log(error)
+    return res.json({success:false})
+}
+
+}
+//login user
 async function login(req,res){
 const {username,password}=req.body
 if(!username || !password){
@@ -80,4 +102,4 @@ async function viewUsers(req,res){
 }
 
 
-module.exports={signupAdmin,addUser,login,viewUsers}
+module.exports={signupAdmin,addUser,signup,login,viewUsers}

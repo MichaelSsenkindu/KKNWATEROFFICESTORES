@@ -50,6 +50,56 @@
 <hr>
 <button onclick="addStock()">Add Stock</button>
 </div>
-   <script src="script.js"></script> 
+   <script>
+    // add stock
+function addStock(){
+ 
+const materialName=document.getElementById('materialName').value
+const materialSize=document.getElementById('materialSize').value
+const materialType=document.getElementById('materialType').value
+const quantity=document.getElementById('quantity').value
+const date=document.getElementById('date').value
+if(!materialName || !materialSize || !materialType || !quantity || !date){
+  return alert('All fields are required...!')
+}
+fetch('/addStock',{
+  method:'post',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+    materialName:materialName,
+    materialSize:materialSize,
+    materialType:materialType,
+    quantity:quantity,
+    date:date
+  })
+})
+.then(res=>res.json())
+.then(data=>{
+  if(data.success){
+    alert('Stock added successfully')
+ document.getElementById('materialName').value=''
+ document.getElementById('materialSize').value=''
+ document.getElementById('materialType').value=''
+ document.getElementById('quantity').value=''
+ document.getElementById('date').value=''
+  setTimeout(() => {
+        window.location='dashboard.html'
+      }, 2000);
+  }else{
+    return alert('Failed to add Stock please try again......')
+  }
+}).catch(error=>{
+  console.log(error)
+  return 
+})
+
+}
+const addUserRole=document.getElementById('addStockContainer')
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin' && userRole !=='Operations Manager'){
+  addUserRole.style.pointerEvents='none'
+  addUserRole.style.opacity=0.5
+}
+   </script> 
 </body>
 </html>

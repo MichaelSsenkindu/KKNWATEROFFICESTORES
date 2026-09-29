@@ -10,6 +10,54 @@ function toggle(id){
   }
  
 }
+//signup user
+const signupForm=document.getElementById('signupForm')
+
+if(signupForm){
+    signupForm.addEventListener('submit',(e)=>{
+        e.preventDefault()
+        const username=document.getElementById('username').value.toLowerCase().trim()
+        const password=document.getElementById('password').value
+        const role=document.getElementById('role').value
+        const signupMsg=document.getElementById('signupMsg')
+        if(!username || !password || !role){
+            signupMsg.style.color='red'
+            signupMsg.textContent='All fields are required..!'
+            setTimeout(() => {
+            signupMsg.style.color='black'
+            signupMsg.textContent='Please Signup' 
+            }, 2000);
+            return
+        }
+
+  fetch('/signup',{
+   method:'post' ,
+   headers:{'Content-Type':'application/json'},
+   body:JSON.stringify({username,password,role})
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+        signupMsg.style.color='green'
+        signupMsg.textContent='Signup successfull please wait.....'
+        setTimeout(() => {
+          window.location='dashboard.html'  
+        }, 2000);
+
+}else{
+  signupMsg.style.color='red'
+  signupMsg.textContent='Username already exists,try another..!'
+  setTimeout(() => {
+    signupMsg.style.color='black'
+    signupMsg.textContent='Please Signup' 
+            }, 2000);
+            return
+}
+
+
+
+  })
+ })
+}
 
 
 // login user
@@ -62,64 +110,73 @@ if(loginForm){
   })
  })
 }
-
-// add stock
-function addStock(){
+//user permissions
+// const addStock=document.getElementById('addStockContainer')
+// const userStockRole=localStorage.getItem('role')
+// if(userStockRole !=='Admin' && userStockRole !=='Operations Manager'){
+//   addStock.style.pointerEvents='none'
+//   addStock.style.opacity=0.5
+// }
+//show user role on dashboard
+const workRole=localStorage.getItem('role')
+const loginUser=localStorage.getItem('username')
+document.getElementById('welcomeMsg').textContent=`Welcome to KKN WATER OFFICE STORES
+ ${loginUser}
+ ${workRole}`
+// // add stock
+// function addStock(){
  
-const materialName=document.getElementById('materialName').value
-const materialSize=document.getElementById('materialSize').value
-const materialType=document.getElementById('materialType').value
-const quantity=document.getElementById('quantity').value
-const date=document.getElementById('date').value
-if(!materialName || !materialSize || !materialType || !quantity || !date){
-  return alert('All fields are required...!')
-}
-fetch('/addStock',{
-  method:'post',
-  headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({
-    materialName:materialName,
-    materialSize:materialSize,
-    materialType:materialType,
-    quantity:quantity,
-    date:date
-  })
-})
-.then(res=>res.json())
-.then(data=>{
-  if(data.success){
-    alert('Stock added successfully')
- document.getElementById('materialName').value=''
- document.getElementById('materialSize').value=''
- document.getElementById('materialType').value=''
- document.getElementById('quantity').value=''
- document.getElementById('date').value=''
-  setTimeout(() => {
-        window.location='dashboard.html'
-      }, 2000);
-  }else{
-    return alert('Failed to add Stock please try again......')
-  }
-}).catch(error=>{
-  console.log(error)
-  return 
-})
+// const materialName=document.getElementById('materialName').value
+// const materialSize=document.getElementById('materialSize').value
+// const materialType=document.getElementById('materialType').value
+// const quantity=document.getElementById('quantity').value
+// const date=document.getElementById('date').value
+// if(!materialName || !materialSize || !materialType || !quantity || !date){
+//   return alert('All fields are required...!')
+// }
+// fetch('/addStock',{
+//   method:'post',
+//   headers:{'Content-Type':'application/json'},
+//   body:JSON.stringify({
+//     materialName:materialName,
+//     materialSize:materialSize,
+//     materialType:materialType,
+//     quantity:quantity,
+//     date:date
+//   })
+// })
+// .then(res=>res.json())
+// .then(data=>{
+//   if(data.success){
+//     alert('Stock added successfully')
+//  document.getElementById('materialName').value=''
+//  document.getElementById('materialSize').value=''
+//  document.getElementById('materialType').value=''
+//  document.getElementById('quantity').value=''
+//  document.getElementById('date').value=''
+//   setTimeout(() => {
+//         window.location='dashboard.html'
+//       }, 2000);
+//   }else{
+//     return alert('Failed to add Stock please try again......')
+//   }
+// }).catch(error=>{
+//   console.log(error)
+//   return 
+// })
+// const addUserRole=document.getElementById('addStockContainer')
+// const userRole=localStorage.getItem('role')
+// if(userRole !=='Admin' && userRole !=='Operations Manager'){
+//   addUserRole.style.pointerEvents='none'
+//   addUserRole.style.opacity=0.5
+// }
+// }
 
-}
-const addUserRole=document.getElementById('addStockContainer')
-const userRole=localStorage.getItem('role')
-if(userRole !=='Admin' && userRole !=='Operations Manager'){
-  addUserRole.style.pointerEvents='none'
-  addUserRole.style.opacity=0.5
-}
 // logout
 function logout(){
   window.location='login.html'
 }
-//show user role on dashboard
-const workRole=localStorage.getItem('role')
-const loginUser=localStorage.getItem('username')
-document.getElementById('welcomeMsg').textContent=`Welcome to KKN WATER OFFICE STORES ${loginUser}---${workRole}`
+
 // const userForm=document.getElementById('addUser')
 
 //home display
