@@ -171,4 +171,37 @@ h1{text-align: center;padding: 20px;font-weight: bold;}
             }
         }
     }
+
+    #loginForm {
+        width: 90%;
+        padding: 25px 20px;
+        margin: 40px auto;
+    }
+
+    #loginForm h1 {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    #loginForm h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    #loginForm label {
+        font-size: 16px;
+    }
+
+    #loginForm input {
+        width: 100%;
+        box-sizing: border-box;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    #loginForm button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
 }
