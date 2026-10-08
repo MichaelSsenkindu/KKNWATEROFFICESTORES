@@ -164,7 +164,7 @@ fetch('/addStock',{
  document.getElementById('quantity').value=''
  document.getElementById('date').value=''
   setTimeout(() => {
-        window.location='/dashboard'
+        window.location='/addStock'
       }, 2000);
   }else{
     return alert(data.message)
