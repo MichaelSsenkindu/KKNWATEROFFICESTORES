@@ -7,24 +7,25 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="availableStock">
+  <div class="availableStock" style="position: fixed;top: 20px;">
     <h2>Available stock</h2>
-    <div id="availableStock"></div>
+    <div id="availableStock" style="position: fixed;left: 10px;"></div>
     </div>
-  <script>
+   <script>
 
+    function viewStock(){
 
-function viewStock(){
   const stockList=document.getElementById('availableStock')
   stockList.innerHTML=''
-  fetch('/viewStock',{
+  fetch('/stocks/viewStock',{
     method:'get'
   }).then(res=>res.json())
   .then(data=>{
     if(data.success){
+      console.log(data)
 data.availableStocks.forEach((availableStock,i) => {
     const li=document.createElement('li')
-    li.textContent=`${i+1}.${availableStock.materialName}  ${availableStock.materialSize}------${availableStock.quantity}`
+    li.textContent=`${1+i}.${availableStock.materialName}-${availableStock.materialSize} Total ${availableStock.quantity}`
     stockList.appendChild(li)
   });
     }else{return alert('no Stock found')}
@@ -33,6 +34,8 @@ data.availableStocks.forEach((availableStock,i) => {
   
 }
 viewStock()
-  </script>
+   </script>
+
+  <!-- <script src="/script.js"></script> -->
 </body>
 </html>

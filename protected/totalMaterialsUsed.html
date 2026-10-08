@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Materials Used</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="totalMaterialsGivenOut" style="position: fixed;top: 10px;">
+    <div id="date"></div>
+    <h1>TOTAL MATERIALS GIVEN OUT</h1>
+    <div id="totalMaterialsUsed" style="margin-top: 20px;position: fixed;left: 10px;">
+    </div>
+    </div>
+  <script>
+ function totalMaterialsUsed(){
+const totalMaterialsUsed=document.getElementById('totalMaterialsUsed')    
+totalMaterialsUsed.innerHTML=''
+    fetch('/stocks/totalMaterialsUsed',{
+            method:'get'
+     })
+     .then(res=>res.json())
+    .then(data=>{
+            if(data.success){
+           data.givenStocks.forEach((givenStock,i) => {
+            const li=document.createElement('li')
+        li.textContent=`${1+i}.${givenStock.materialName}/${givenStock.materialSize}--${givenStock.quantity}-Given to ${givenStock.GIVENTO } on ${givenStock.date}`
+        totalMaterialsUsed.appendChild(li)  
+        });   
+        
+         }else{return alert(data.message)}
+     })
+
+}
+
+totalMaterialsUsed()
+
+</script>
+
+
+  <script src="/script.js"></script> 
+</body>
+</html>

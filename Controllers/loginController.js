@@ -12,7 +12,8 @@ if(admin){
 }
 const newAdmin=await adminModel.create({username:'admin',password:'123',role:'Admin'})
 res.json({success:true,role:newAdmin.role})
-} catch (error) {
+}
+catch (error) {
     console.log(error)
     
     return res.json({success:false})
@@ -21,7 +22,7 @@ res.json({success:true,role:newAdmin.role})
 }
 
 
-// addUser
+// ADD USER
 async function addUser(req,res) {
     const {username,role,password}=req.body
     if(!username || !role || !password ){
@@ -29,10 +30,10 @@ async function addUser(req,res) {
     }
     const cleanUsername=username.toLowerCase().trim()
     try {
-const existingUser=await loginModel.findOne({username})
+const existingUser=await loginModel.findOne({username:cleanUsername})
     if(!existingUser){
  await loginModel.create({username:cleanUsername,role:role,password:password})
- res.json({success:true})
+ res.json({success:true,message:'User added successsfully'})
     }else{return res.json({success:false,message:'Username already exists, try another one..!'})}
       
        
@@ -71,28 +72,31 @@ if(!username || !password){
 }
 const cleanUsername=username.toLowerCase().trim()
 try {
-const admin=await adminModel.findOne({username:cleanUsername,password:password})
-if(admin){
-    res.json({success:true,username:admin.username,role:admin.role})
-}
+    const admin=await adminModel.findOne({username:cleanUsername,password:password})
+    if (admin){
+    req.session.user={username:admin.username, role:admin.role}
+    return  res.json({success:true,username:admin.username,role:admin.role})
+    }
+    const logginUser=await loginModel.findOne({username:cleanUsername,password:password})
+    if(logginUser){
+    req.session.user={username:logginUser.username,role:logginUser.role}
+    return res.json({success:true,username:logginUser.username,role:logginUser.role})
+    }
 
-const user=await loginModel.findOne({username:cleanUsername,password:password}) 
-if(user){
-res.json({success:true,username:user.username,role:user.role})
-}
+ return res.json({success:false,message:'Invalid Username/Password'})
+
 }catch(error){
     console.log(error)
-    return res.json({success:false})
+   
 }
-
 }
-
 // view users
 async function viewUsers(req,res){
     try {
       const users=await loginModel.find()
-    console.log(users)
-    res.json({success:true,users:users})
+    if(users.length>0){
+        res.json({success:true,users:users})
+    }else{return res.json({success:false,message:'No Users were found..'})}
 
     } catch (error) {
         console.log(error)

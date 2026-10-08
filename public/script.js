@@ -1,4 +1,5 @@
 
+
 function toggle(id){
   const menu=document.getElementById(id)
   if(menu.style.display==='block'){
@@ -91,12 +92,12 @@ if(loginForm){
         localStorage.setItem('username',data.username)
         localStorage.setItem('role',data.role)
         setTimeout(() => {
-          window.location='dashboard.html'  
+          window.location='/dashboard'  
         }, 2000);
 
 }else{
   loginMsg.style.color='red'
-  loginMsg.textContent='Invalid Username/Password'
+  loginMsg.textContent=data.message
   setTimeout(() => {
     loginMsg.style.color='black'
     loginMsg.textContent='Please Login' 
@@ -110,79 +111,116 @@ if(loginForm){
   })
  })
 }
-//user permissions
-// const addStock=document.getElementById('addStockContainer')
-// const userStockRole=localStorage.getItem('role')
-// if(userStockRole !=='Admin' && userStockRole !=='Operations Manager'){
-//   addStock.style.pointerEvents='none'
-//   addStock.style.opacity=0.5
-// }
+// // logout
+function logout(){
+
+  window.location='/login'
+}
+// //home display
+ function displayHome(){
+  window.location='/dashboard'
+ }
+
 //show user role on dashboard
 const workRole=localStorage.getItem('role')
 const loginUser=localStorage.getItem('username')
-document.getElementById('welcomeMsg').textContent=`Welcome to KKN WATER OFFICE STORES
- ${loginUser}
- ${workRole}`
-// // add stock
-// function addStock(){
- 
-// const materialName=document.getElementById('materialName').value
-// const materialSize=document.getElementById('materialSize').value
-// const materialType=document.getElementById('materialType').value
-// const quantity=document.getElementById('quantity').value
-// const date=document.getElementById('date').value
-// if(!materialName || !materialSize || !materialType || !quantity || !date){
-//   return alert('All fields are required...!')
-// }
-// fetch('/addStock',{
-//   method:'post',
-//   headers:{'Content-Type':'application/json'},
-//   body:JSON.stringify({
-//     materialName:materialName,
-//     materialSize:materialSize,
-//     materialType:materialType,
-//     quantity:quantity,
-//     date:date
-//   })
-// })
-// .then(res=>res.json())
-// .then(data=>{
-//   if(data.success){
-//     alert('Stock added successfully')
-//  document.getElementById('materialName').value=''
-//  document.getElementById('materialSize').value=''
-//  document.getElementById('materialType').value=''
-//  document.getElementById('quantity').value=''
-//  document.getElementById('date').value=''
-//   setTimeout(() => {
-//         window.location='dashboard.html'
-//       }, 2000);
-//   }else{
-//     return alert('Failed to add Stock please try again......')
-//   }
-// }).catch(error=>{
-//   console.log(error)
-//   return 
-// })
-// const addUserRole=document.getElementById('addStockContainer')
-// const userRole=localStorage.getItem('role')
-// if(userRole !=='Admin' && userRole !=='Operations Manager'){
-//   addUserRole.style.pointerEvents='none'
-//   addUserRole.style.opacity=0.5
-// }
-// }
+const welcomeUser=document.getElementById('welcomeMsg')
+welcomeUser.innerHTML=`<span class='title'>Welcome to KKN WATER OFFICE STORES ${loginUser} </span>
+ <span class='roles'> ${workRole}</span>`
 
-// logout
-function logout(){
-  window.location='login.html'
+ // add stock
+function addStock(){
+const userRole=localStorage.getItem('role')
+if(userRole !=='Admin' && userRole !=='Operations Manager'){
+ return alert('only admins can add stock')
+}
+ 
+const materialName=document.getElementById('materialName').value
+const materialSize=document.getElementById('materialSize').value
+const materialType=document.getElementById('materialType').value
+const quantity=document.getElementById('quantity').value
+const date=document.getElementById('date').value
+if(!materialName || !materialSize || !materialType || !quantity || !date){
+  return alert('All fields are required...!')
+}
+fetch('/addStock',{
+  method:'post',
+  headers:{'Content-Type':'application/json'},
+  body:JSON.stringify({
+    materialName:materialName,
+    materialSize:materialSize,
+    materialType:materialType,
+    quantity:quantity,
+    date:date
+  })
+})
+.then(res=>res.json())
+.then(data=>{
+  if(data.success){
+    alert('Stock added successfully')
+ document.getElementById('materialName').value=''
+ document.getElementById('materialSize').value=''
+ document.getElementById('materialType').value=''
+ document.getElementById('quantity').value=''
+ document.getElementById('date').value=''
+  setTimeout(() => {
+        window.location='/dashboard'
+      }, 2000);
+  }else{
+    return alert(data.message)
+  }
+}).catch(error=>{
+  console.log(error)
+  return 
+})
 }
 
-// const userForm=document.getElementById('addUser')
+//giveOutMaterials
 
-//home display
- function displayHome(){
-  window.location='dashboard.html'
- }
+function giveOutMaterials(){
+  const userRole=localStorage.getItem('role')
+if(userRole !=='Admin' && userRole !=='Operations Manager'){
+ return alert('only admins can add stock')
+}
+const GIVENTO=document.getElementById('givenTo').value
+const materialName=document.getElementById('materialName').value
+const materialSize=document.getElementById('materialSize').value
+const materialType=document.getElementById('materialType').value
+const quantity=document.getElementById('quantity').value
+const date=document.getElementById('date').value
+
+if(!GIVENTO || !materialName ||!materialSize || !materialType || !quantity || !date){
+  return alert('all fields are required')
+}
+fetch('/stocks/giveOutMaterials',{
+  method:'post',
+  headers:{'Content-Type': 'application/json'},
+  body:JSON.stringify({
+    GIVENTO:GIVENTO,materialName:materialName,materialSize:materialSize,materialType:materialType,quantity:quantity,date:date
+  })
+}).then(res=>res.json())
+.then(data=>{
+  if(data.success){
+    alert('Materials given out successfully')
+    document.getElementById('givenTo').value=''
+    document.getElementById('materialName').value=''
+    document.getElementById('materialSize').value=''
+    document.getElementById('materialType').value=''
+    document.getElementById('quantity').value=''
+    document.getElementById('date').value=''
+     setTimeout(() => {
+        window.location='/dashboard'
+      }, 2000);
+  }else{
+    return alert(data.message)
+  }
+}).catch(error=>{
+  console.log(error)
+  return
+})
+}
+
+// show dashboard cards
  function couplersOD20mm(){
   fetch('/couplersOD20mm')
   .then(res=>res.json())
@@ -216,23 +254,51 @@ document.getElementById('pipesOD160mm').textContent=`Pipes: ${data.totalPipe160m
 couplersOD20mm()
 
 
-function viewStock(){
+//  function search(){
+//   const searchedStock=document.getElementById('searchedStock')
+//   searchedStock.innerHTML=''
+//  const searchInput=document.getElementById('searchInput').value.toLowerCase().trim()
+//  if(!searchInput){return alert('Please enter an Item')}
+//  fetch(`/stocks/search?searchInput=${searchInput}`,{
+//   method:'get'
+//  })
+//  .then(res=>res.json())
+//  .then(data=>{
+//   if(data.success){
+//     data.searches.forEach(search => {
+//       const li=document.createElement('li')
+//     li.textContent=`${search.materialName}-${search.materialSize}  ${search.quantity}`
+//   searchedStock.appendChild(li)
+//     });
+    
+//   }
+//  })
 
-  const stockList=document.getElementById('availableStock')
-  stockList.innerHTML=''
-  fetch('/viewStock',{
+//  }
+
+
+    //SEARCH STOCK
+function search(){
+  const searchInput=document.getElementById('searchInput').value.toLowerCase().trim()
+  if(!searchInput){return alert('Please Enter Item')}
+  fetch(`/stocks/searchStock?searchInput=${searchInput}`,{
     method:'get'
-  }).then(res=>res.json())
+  })
+  .then(res=>res.json())
   .then(data=>{
     if(data.success){
-data.availableStocks.forEach(availableStock => {
-    const li=document.createElement('li')
-    li.textContent=availableStock.materialName
-    stockList.appendChild(li)
-  });
-    }else{return alert('no Stock found')}
-   
-  })
-  
+      const searchList=document.getElementById('searchList')
+      searchList.innerHTML=''
+      data.stocks.forEach((stock,i) => {
+        const li=document.createElement('li')
+        li.textContent=`${1+i}.${stock.materialName}/${stock.materialSize}-${stock.quantity}`
+        searchList.appendChild(li)
+      });
+    }else{document.getElementById('searchInput').value=''  
+    return  alert(data.message)
+    }
+  }).catch((error)=>{
+  console.log(error)
+  return
+})
 }
-viewStock()

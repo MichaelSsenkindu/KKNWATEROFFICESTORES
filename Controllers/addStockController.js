@@ -5,6 +5,7 @@ const {materialName,materialSize,materialType,quantity,date}=req.body
 if(!materialName || !materialSize || !materialType || !quantity || !date){
   return res.json({success:false})
 }
+if(quantity<=0){return res.json({success:false,message:"The quantity must be greater than 0"})}
 try {
    await addStockModel.create({
     materialName:materialName,
@@ -101,9 +102,9 @@ if(!GIVENTO || !materialName ||!materialSize || !materialType || !quantity || !d
 }
 try{
 const materials=await addStockModel.findOne({materialName:materialName,materialSize:materialSize})
-if(!materials){return res.json({success:false})}
+if(!materials){return res.json({success:false,message:'No record found.!'})}
 //check for enough materials
-if(quantity > materials.quantity){return res.json({success:false})}
+if(quantity > materials.quantity){return res.json({success:false,message:'Sorry materials are not enough'})}
 //reduce materials if given out
 materials.quantity=materials.quantity-quantity
 //save new stock
@@ -114,7 +115,7 @@ const givenOut=new  givenOutMaterialsModel({
   materialSize:materials.materialSize,
   quantity:quantity,
   GIVENTO:GIVENTO,
-  materialType,
+  materialType:materialType,
   date:date
 })
 await givenOut.save()
@@ -125,12 +126,84 @@ return res.json({success:true})
   return res.json({success:false})
 }
 }
+//VIEW STOCK
 async function viewStock(req,res) {
   try {
-    const availableStock=await addStockModel.find()
-  if(availableStock){
-    res.json({success:true,availableStocks:availableStock})
+    const availableStocks=await addStockModel.find()
+  if(availableStocks.length>0){
+    res.json({success:true,availableStocks:availableStocks})
   }
+  } catch (error) {
+    console.log(error)
+    return res.json({success:false})
+  }
+  
+}
+async function totalMaterialsUsed(req,res) {
+  try {
+    const givenStocks=await givenOutMaterialsModel.find()
+  if(givenStocks){
+    return res.json({success:true,givenStocks:givenStocks})
+  }else{return res.json({success:false,message:'No stock found'})}
+  
+  } catch (error) {
+    console.log(error)
+  }
+  
+}
+async function editStock(req,res) {
+ const id=req.params.id
+ const {materialName,materialSize,materialType,quantity}=req.body
+ try {
+  const edited=await addStockModel.findByIdAndUpdate(id,{
+    materialName:materialName,
+      materialSize:materialSize,
+      materialType:materialType,
+      quantity:quantity
+  },
+  { new: true }
+)
+  if(edited){
+    return res.json({success:true,message:'Stock updated successfully'})
+  }else{
+    return res.json({success:false,message:'Failed to update Stock'})
+  }
+ } catch (error) {
+  console.log(error)
+  return res.json({success:false})
+ }
+     
+  
+}
+
+//SEARCH STOCK
+async function searchStock(req,res){
+  const searchInput=req.query.searchInput
+  if(!searchInput){return res.json({success:false})}
+  try {
+    const stocks=await addStockModel.find({materialName:{$regex:searchInput,$options:'i'}})
+    //Note {$regex:searchInput,$options:'i'} changes to lower case
+    if(stocks.length>0){
+      return res.json({success:true,stocks:stocks})
+    }else{
+      return res.json({success:false,message:'No Stock found'})
+    }
+  } catch (error) {
+    console.log(error)
+    return res.json({success:false})
+  }
+}
+//DELETE STOCK
+async function deleteStock(req,res) {
+  const id=req.params.id
+  
+  try {
+   const deleted=await addStockModel.findByIdAndDelete(id)
+  if(deleted){
+    return res.json({success:true,message:'Stock deleted successfully'})
+  }else{
+    return res.json({success:false,message:'Failed to delete Stock'})
+  } 
   } catch (error) {
     console.log(error)
     return res.json({success:false})
@@ -140,4 +213,13 @@ async function viewStock(req,res) {
 
 
 
-module.exports={addStock,couplersOD20mm,giveOutMaterials,viewStock}
+module.exports={addStock,
+  couplersOD20mm,
+  giveOutMaterials,
+  viewStock,
+  totalMaterialsUsed,
+  editStock,
+  searchStock,
+  deleteStock
+
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT STOCK</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="edit" id="edit">
+    <h1 style="position: fixed;text-align: center;top: 20px;">EDIT STOCK</h1>
+    <div id="availableStock" class="availableStock" style="position: fixed;left: 10px;margin: 20px;list-style: none;top: 40px;"></div>
+    </div>
+   </div>
+    <script>
+        function viewStock(){
+
+  const stockList=document.getElementById('availableStock')
+  stockList.innerHTML=''
+  fetch('/stocks/viewStock',{
+    method:'get'
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+      console.log(data)
+data.availableStocks.forEach((availableStock,i) => {
+    const li=document.createElement('li')
+    const edit=document.createElement('button')
+    edit.textContent='EDIT'
+    li.textContent=`${1+i}.${availableStock.materialName}-${availableStock.materialSize} Total ${availableStock.quantity}`
+    stockList.appendChild(li)
+    li.appendChild(edit)
+    edit.onclick=()=>{
+editStock(availableStock._id,availableStock)
+    }
+  });
+    }else{return alert('no Stock found')}
+   
+  })
+  
+}
+
+function editStock(id,availableStock){
+  
+ const materialName=prompt('Enter new name',availableStock.materialName)   
+ const materialSize=prompt('Enter new Size',availableStock.materialSize)   
+ const materialType=prompt('Enter new Type',availableStock.materialType) 
+ const quantity=prompt('Enter new Quantity',availableStock.quantity)
+ if(!materialName || !materialSize || !materialType || !quantity){return alert('please enter new fields')} 
+ console.log({
+    materialName,
+    materialSize,
+    materialType,
+    quantity
+})
+ fetch('/stocks/editStock/' + id,{
+    method:'put',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({materialName,materialSize,materialType,quantity})
+ })
+.then(res=>res.json())
+.then(data=>{
+    if(data.success){
+     alert(data.message)
+     viewStock()
+   
+     return
+    }else{
+        return alert(data.message)
+    }
+}).catch((error)=>{
+console.log(error)
+return
+})
+}
+viewStock()
+ const editPermissions=document.getElementById('edit')
+const userRole=localStorage.getItem('role')
+
+if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+  editPermissions.style.pointerEvents='none'
+  editPermissions.style.opacity='0.5'
+}
+    </script>
+  <script src="/script.js"></script>  
+</body>
+</html>

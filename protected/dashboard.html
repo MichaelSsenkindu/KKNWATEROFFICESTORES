@@ -15,11 +15,12 @@
 <div class="menuGroups">
 <button onclick="toggle('stockManagement')">Stock Management</button>
 <div id="stockManagement" class="subMenu" hidden>
-<a href="addStock.html">Add Stock</a>
-<a href="#">Edit Stock</a>
-<a href="#">Delete Stock</a>
-<a href="viewStock.html">View Stock</a>
-<a href="giveOutMaterial.html">Give out Materials</a>
+<a href="/addStock">Add Stock</a>
+<a href="/editStock">Edit Stock</a>
+<a href="/deleteStock">Delete Stock</a>
+<a href="/viewStock">View Stock</a>
+<a href="/searchStock">Search Stock</a>
+<a href="/giveOutMaterials">Give out Materials</a>
 
 </div>
 </div> 
@@ -38,10 +39,10 @@
 <div class="menuGroups">
 <button onclick="toggle('users')">Users</button>
 <div id="users" class="subMenu" hidden>
-<a href="users.html">Add User</a>
+<a href="/addUser">Add User</a>
 <a href="#">Edit User</a>
 <a href="#">Delete User</a>
-<a href="viewUsers.html">View User</a>
+<a href="/viewUsers">View User</a>
 <a href="#">Disable User</a>
 </div>
 </div>
@@ -50,7 +51,7 @@
 <div id="reports" class="subMenu" hidden>
 <a href="#">Total Materials Stocked </a>
 <a href="#">Total Materials avalaible</a>
-<a href="#">Total Materials Used</a>
+<a href="/totalMaterialsUsed">Total Materials Used</a>
 </div>
 </div>
 </div>
@@ -106,18 +107,8 @@
     <div id="couplersOD160mm" style="margin: 10px;">0</div>
     <div id="pipesOD160mm" style="margin: 10px;">0</div>
 </div>
-
 </div>
-
 </main>
-
-
-
-
-
-
-
-
- <script src="script.js"></script> 
+ <script src="/script.js"></script> 
 </body>
 </html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELETE STOCK</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="delete" id="delete">
+    <h1 style="position: fixed;top: 20px;">Delete Stock here</h1>
+  <div id="availableStock" style="position: fixed;left: 10px;top: 70px;"></div>
+  </div>
+  <script>
+ function viewStock(){
+
+  const stockList=document.getElementById('availableStock')
+  stockList.innerHTML=''
+  fetch('/stocks/viewStock',{
+    method:'get'
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+      console.log(data)
+data.availableStocks.forEach((availableStock,i) => {
+    const li=document.createElement('li')
+    const del=document.createElement('button')
+    del.style.background='red'
+    del.textContent='DELETE'
+    li.textContent=`${1+i}.${availableStock.materialName}-${availableStock.materialSize} Total ${availableStock.quantity}`
+    stockList.appendChild(li)
+    li.appendChild(del)
+    del.onclick=()=>{
+        deleteStock(availableStock._id)
+    }
+
+  });
+    }else{return alert('no Stock found')}
+   
+  })
+  
+}
+viewStock()
+function deleteStock(id){
+
+    const msg=confirm('Delete Stock ?')
+    if(!msg){
+        return
+    }
+    fetch('/stocks/deleteStock/'+id,{
+        method:'delete'
+    })
+    .then(res=>res.json())
+    .then(data=>{
+if(data.success){
+   alert(data.message)
+   setTimeout(() => {
+    window.location='/deleteStock'
+   }, 1000);
+   viewStock()
+   return
+}else{
+return alert(data.message)
+}
+    })
+}
+
+const deletePermissions=document.getElementById('delete')
+const userRole=localStorage.getItem('role')
+
+if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+  deletePermissions.style.pointerEvents='none'
+  deletePermissions.style.opacity='0.5'
+}
+  </script>
+    <script src="/script.js"></script>
+</body>
+</html>

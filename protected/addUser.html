@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USERS</title>
+    <title>ADD USER</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="addUsers">
     <h1>Add User</h1>
     <form id="addUser">
-<input type="text" id="username" placeholder="Enter Username" autocomplete="off" required><br><br>
-<select id="role" required>
+<input type="text" id="username" placeholder="Enter Username" autocomplete="off"><br><br>
+<select id="role">
     <option value="">Select Officer Role</option>
     <option value="Technical Supervisor">Technical Supervisor</option>
     <option value="Plumber">Plumber</option>
@@ -21,16 +21,17 @@
     <option value="Pump Attendant">Pump Attendant</option>
     <option value="Security Guard">Security Guard</option>
 </select><br><br>
-<input type="password" id="password" placeholder="Enter User Password" required><br><br>
+<input type="password" id="password" placeholder="Enter User Password"><br><br>
 <button type="submit">Add User</button>
     </form>
- 
-<script>
-    // add user
+    <script>
+// ADD USER
 const addUser=document.getElementById('addUser')
 if(addUser){
-  addUser.addEventListener('submit',(e)=>{
+ addUser.addEventListener('submit',(e)=>{
     e.preventDefault()
+ 
+  
   const username=document.getElementById('username').value.toLowerCase().trim()
   const role=document.getElementById('role').value
   const password=document.getElementById('password').value
@@ -41,19 +42,20 @@ if(addUser){
     method:'post',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({username:username,role:role,password:password})
-  }).then(res=>res.json())
+  })
+  .then(res=>res.json())
   .then(data=>{
     if(data.success){
-      alert('user added successsfully')
+      alert(data.message)
       document.getElementById('username').value=''
       document.getElementById('role').value=''
       document.getElementById('password').value=''
       setTimeout(() => {
-        window.location='dashboard.html'
+        window.location='/dashboard'
       }, 2000);
     }else{ 
-      alert(data.message)
-          return
+       return  alert(data.message)
+       
         }
   }).catch(error=>{
     console.log(error)
@@ -61,14 +63,14 @@ if(addUser){
   })
 })
 }
-
-const addUserRole=document.getElementById('addUser')
+const userPermissions=document.getElementById('addUser')
 const userRole=localStorage.getItem('role')
-if(userRole !=='Admin'){
-  addUserRole.style.pointerEvents='none'
-  addUserRole.style.opacity=0.5
+
+if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+  userPermissions.style.pointerEvents='none'
+  userPermissions.style.opacity='0.5'
 }
-</script>
- <!-- <script src="script.js"></script> -->
+
+    </script>
 </body>
 </html>
