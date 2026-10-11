@@ -13,7 +13,10 @@ const adminModel=mongoose.model('Admin',adminSchema)
 const loginSchema=new mongoose.Schema({
 username:{type:String,required:true},
 password:{type:String,required:true},
-role:{type:String,required:true}
+role:{type:String,required:true},
+active:{
+    type:Boolean,default:true
+}
 
 })
 const loginModel=mongoose.model('Users',loginSchema)

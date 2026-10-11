@@ -302,3 +302,7 @@ function search(){
   return
 })
 }
+
+ function viewAllRequests(){
+window.location='/viewAllRequests'
+ }

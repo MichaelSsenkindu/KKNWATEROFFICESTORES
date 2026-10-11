@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDIT USER</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="viewUsers">
+<h1>Available Users</h1>
+<div id="usersList"></div>
+</div>
+    <script>
+     function viewUsers(){ 
+const usersList=document.getElementById('usersList')
+usersList.innerHTML=''
+fetch('/users/viewUsers',{
+    method:'get'
+})
+.then(res=>res.json())
+.then(data=>{
+    if(data.success){
+        data.users.forEach((user,i) => {
+            const li=document.createElement('li')
+            const deleteBtn=document.createElement('button')
+            deleteBtn.textContent='DELETE'
+            deleteBtn.style.background='red'
+            li.textContent=`${1+i}.${user.username}-----${user.role}` 
+            usersList.appendChild(li) 
+            li.appendChild(deleteBtn) 
+            deleteBtn.onclick=()=>{
+                deleteUser(user._id)
+            }
+        });
+    }
+})
+  }
+  viewUsers()
+  function deleteUser(id){
+  
+  fetch('/users/deleteUser/'+ id,{
+    method:'delete'
+   
+  }).then(res=>res.json())
+  .then(data=>{
+    if(data.success){
+        const msg=confirm("Are you sure, you want to delete this User ?")
+        if(msg){
+alert(data.message)
+        }
+
+viewUsers()
+    }else{
+      return alert(data.message)
+    }
+  })
+}
+    
+</script>
+  <script src="/script.js"></script>  
+</body>
+</html>

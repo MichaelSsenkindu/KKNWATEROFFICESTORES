@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.css" integrity="sha512-x9WwyMYBnlXMNQ6kQ/Lyzu1NqIhLQKL5Oq6xByfXuRj7s9CskyCbLv/1IjqzJmXwFXWr0ov6jBV7Qbc0hh9nHg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -39,7 +40,8 @@
 <button onclick="toggle('requestMaterials')">Request Materials</button>
 <div id="requestMaterials" class="subMenu" hidden>
 <a href="#">Request Materials</a>
-<a href="#">View My requests</a>
+<a href="#">View My Requests</a>
+<a href="/viewAllRequests">View All Requests</a>
 
 </div>
 </div> 
@@ -48,10 +50,10 @@
 <button onclick="toggle('users')">Users</button>
 <div id="users" class="subMenu" hidden>
 <a href="/addUser">Add User</a>
-<a href="#">Edit User</a>
-<a href="#">Delete User</a>
+<a href="/editUser">Edit User</a>
+<a href="deleteUser">Delete User</a>
 <a href="/viewUsers">View User</a>
-<a href="#">Disable User</a>
+<a href="/disableUser">Disable User</a>
 </div>
 </div>
 <div class="menuGroups">
@@ -66,6 +68,7 @@
 <main>
     <div class="titles">
     <h2>UWS-C, KKN WATER OFFICE STORE</h2>
+    <h1><i class="fa-regular fa-message" style="cursor: pointer;" onclick="viewAllRequests()"><span id="meterialRequest"></span></i></h1>
     <h1 id="welcomeMsg">welcome </h1><button onclick="logout()">Logout</button>
     
     </div>

@@ -78,12 +78,17 @@ try {
     return  res.json({success:true,username:admin.username,role:admin.role})
     }
     const logginUser=await loginModel.findOne({username:cleanUsername,password:password})
-    if(logginUser){
+
+    if(!logginUser){
+        return res.json({success:false,message:'Invalid Username/Password'})
+    }else if(!logginUser.active){
+       return res.json({success:false,message:'Your Account has been DISABLED, please contact admin'})  
+    }
     req.session.user={username:logginUser.username,role:logginUser.role}
     return res.json({success:true,username:logginUser.username,role:logginUser.role})
-    }
+    
 
- return res.json({success:false,message:'Invalid Username/Password'})
+ 
 
 }catch(error){
     console.log(error)
@@ -104,6 +109,68 @@ async function viewUsers(req,res){
     }
 
 }
+//disable user
+async function disableUser(req,res) {
+   const id=req.params.id 
+   try {
+    const disabledUser= await loginModel.findById(id)
+    if(!disabledUser){
+       return res.json({success:false,message:'User not found'})
+    }
+    
+   if(disabledUser.active){
+    disabledUser.active=false
+    await disabledUser.save()
+   return res.json({
+    success:true,active:false,  message: 'User disabled successfully'})
+}else{
+            disabledUser.active=true
+            await disabledUser.save()
 
+            return res.json({
+                success:true,
+                message:'User enabled successfully',
+                active:true,
+                
+            })
+        }
+   } catch (error) {
+    console.log(error)
+    return res.json({success:false})
+   }
+   
+}
+async function editUser(req,res) {
+    const id=req.params.id
+    try {
+       
+        const editedUser=await loginModel.findByIdAndUpdate(
+            id,
+         req.body,
+            {new:true}
+        )
+        if(editedUser){
+         return   res.json({success:true,message:'user edited successfully'})
+        }else{return res.json({success:false,message:'Failed to edit user'})}
+    } catch (error) {
+        console.log(error)
+        return res.json({success:false})
+    }
 
-module.exports={signupAdmin,addUser,signup,login,viewUsers}
+    
+}
+async function deleteUser(req,res) {
+    const id=req.params.id
+    try {
+        
+        const deletedUser=await loginModel.findByIdAndDelete(id)
+        if(deletedUser){
+            return res.json({success:true,message:'user deleted successfully'})
+        }else{return res.json({success:false,message:'failed to delete user'})}
+    } catch (error) {
+       console.log(error)
+       returnres.json({success:false}) 
+    }
+}
+
+module.exports={signupAdmin,addUser,signup,login,viewUsers,disableUser,editUser,deleteUser}

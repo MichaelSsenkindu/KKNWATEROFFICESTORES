@@ -210,6 +210,9 @@ async function deleteStock(req,res) {
   }
   
 }
+async function viewAllRequests(req,res) {
+  
+}
 
 
 
@@ -220,6 +223,7 @@ module.exports={addStock,
   totalMaterialsUsed,
   editStock,
   searchStock,
-  deleteStock
+  deleteStock,
+  viewAllRequests
 
 }
