@@ -7,10 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- <div id="editContainer"> -->
     <div class="viewUsers">
 <h1>Available Users</h1>
 <div id="usersList"></div>
 </div>
+<!-- </div> -->
     <script>
      function viewUsers(){ 
 const usersList=document.getElementById('usersList')
@@ -59,7 +61,13 @@ viewUsers()
     }
   })
 }
-    
+     const stockPermissions=document.getElementById('usersList')
+const userRole=localStorage.getItem('role')
+
+if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+  stockPermissions.style.pointerEvents='none'
+  stockPermissions.style.opacity='0.5'
+} 
 </script>
   <script src="/script.js"></script>  
 </body>
