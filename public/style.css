@@ -67,6 +67,7 @@ button{width: 100px;height: 40px;margin-right: 40%;}
 width: 100%;height: 500px;overflow-y: auto;overflow-x: hidden;padding: 10px;
     li{list-style: none;margin: 10px;gap: 20rem;display: flex;align-items: center;justify-content: space-between;}
     button{width: 100px;height: 40px;margin-right: 40%;}
+  
 }
 p{display: flex;align-items: center;justify-content: center;font-weight: bold;
 a{text-decoration: none;margin: 20px;font-size: 20px;font-weight: bold;}
@@ -79,8 +80,10 @@ a{text-decoration: none;margin: 20px;font-size: 20px;font-weight: bold;}
 
 
 }
-#totalMaterialsUsed{
-    li{margin-top: 10px;}
+.printBtn{background: green;color: white;margin-left: 50%;}
+.totalMaterialsUsed{position: absolute;top:20px;left: 20px;
+    li{list-style: none;margin-top: 20px;}
+    
 }
 .searchArea{position: fixed;top:20px;align-items: center;justify-content: center;display: flex;
     .searchInput{padding:10px 20px;text-align: center;border-radius: 10px;outline: none;border: 1px solid black;font-size: 25px;}
@@ -91,7 +94,7 @@ a{text-decoration: none;margin: 20px;font-size: 20px;font-weight: bold;}
 }
 .searchList{position: fixed;left: 40px;top:200px;
 li{list-style: none;margin: 10px;}}
-.printBtn{padding: 20px;width: 150px;text-align: center;}
+
 @media print{
     .printBtn,.printStock{display: none;}
 }
@@ -116,7 +119,7 @@ li{list-style: none;margin: 10px;}}
    MOBILE
 ========================= */
 
-@media (max-width: 450px) {
+/* @media (max-width: 450px) {
     body {
         padding: 12px;
 
@@ -140,9 +143,9 @@ li{list-style: none;margin: 10px;}}
             }
         }
         .printBtn{position: absolute;bottom: 40px;}
-        li{color: red;}
+       
     }
-}
+} */
 
 /* =========================
    TABLET
@@ -174,7 +177,7 @@ li{list-style: none;margin: 10px;}}
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
+@media (max-width< 600px) {
     body {
         display: block;
 
@@ -182,6 +185,8 @@ li{list-style: none;margin: 10px;}}
             width: 100%;
             position: relative;
             min-height: auto;
+           
+          
         }
 
         main {

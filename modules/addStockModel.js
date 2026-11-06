@@ -17,8 +17,10 @@ materialSize:{type:String,required:true},
 materialType:{type:String,required:true},
 quantity:{type:Number,required:true},
 date:{type:String,default:Date.now(),required:true}
+},
+{timestamps:true}
 
-})
+)
 const givenOutMaterialsModel=mongoose.model('GivenOutMaterials',givenOutMaterialsSchema)
 
 

@@ -7,14 +7,19 @@ if(!materialName || !materialSize || !materialType || !quantity || !date){
 }
 if(quantity<=0){return res.json({success:false,message:"The quantity must be greater than 0"})}
 try {
-   await addStockModel.create({
-    materialName:materialName,
-    materialSize:materialSize,
-    materialType:materialType,
-    quantity:quantity,
-    date:date
-   })
-   res.json({success:true}) 
+  const stock=await addStockModel.findOne({
+    materialName: materialName,
+    materialSize: materialSize,
+    materialType: materialType})
+if(stock){
+ stock.quantity=stock.quantity + Number(quantity)
+ await stock.save()
+ return res.json({success:true}) 
+}else{
+ await addStockModel.create(req.body)
+ return res.json({success:true}) 
+}
+  
 } catch (error) {
     console.log(error)
     return
@@ -141,7 +146,7 @@ async function viewStock(req,res) {
 }
 async function totalMaterialsUsed(req,res) {
   try {
-    const givenStocks=await givenOutMaterialsModel.find()
+    const givenStocks=await givenOutMaterialsModel.find().sort({createdAt:-1})
   if(givenStocks){
     return res.json({success:true,givenStocks:givenStocks})
   }else{return res.json({success:false,message:'No stock found'})}
