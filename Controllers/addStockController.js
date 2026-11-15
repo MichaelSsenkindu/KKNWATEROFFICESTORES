@@ -147,7 +147,7 @@ async function viewStock(req,res) {
 async function totalMaterialsUsed(req,res) {
   try {
     const givenStocks=await givenOutMaterialsModel.find().sort({createdAt:-1})
-  if(givenStocks){
+  if(givenStocks.length>0){
     return res.json({success:true,givenStocks:givenStocks})
   }else{return res.json({success:false,message:'No stock found'})}
   
