@@ -80,7 +80,7 @@ a{text-decoration: none;margin: 20px;font-size: 20px;font-weight: bold;}
 
 
 }
-.printBtn{background: green;color: white;margin-left: 50%;}
+.printBtn{background: green;color: white;margin-left: 50%;position: fixed;top: 60px;margin-bottom: 30px;}
 .totalMaterialsUsed{position: absolute;top:20px;left: 20px;
     li{list-style: none;margin-top: 20px;}
     
@@ -142,7 +142,8 @@ li{list-style: none;margin: 10px;}}
                 height: 45px;
             }
         }
-        .printBtn{position: absolute;bottom: 40px;}
+        /* .printBtn{position: absolute;bottom: 40px;} */
+        .printBtn{background: green;color: white;margin-left: 50%;position: fixed;top: 60px;margin-bottom: 30px;}
        
     }
 } 
@@ -177,7 +178,7 @@ li{list-style: none;margin: 10px;}}
    MOBILE
 ========================= */
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
     body {
         display: block;
 
@@ -209,7 +210,12 @@ li{list-style: none;margin: 10px;}}
             }
         }
     }
+.searchArea{position: relative;top:20px;align-items: center;justify-content: center;display: flex;
+    .searchInput{padding:10px 10px;text-align: center;border-radius: 10px;outline: none;border: 1px solid black;font-size: 15px;}
+    .searchInput:focus{border: 1px solid green;}
+    
 
+}
     #loginForm,#signupForm {
         width: 90%;
         padding: 25px 20px;
