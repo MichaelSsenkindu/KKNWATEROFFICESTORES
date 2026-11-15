@@ -5,6 +5,9 @@ const {signupAdmin,addUser,signup,login,viewUsers,disableUser,editUser,deleteUse
 const isLoggedIn=require('../middleware/authMiddeleware')
 
 loginRouter.get('/',(req,res)=>{
+res.sendFile(path.join(__dirname,'../public/landingPage.html'))
+})
+loginRouter.get('/login',(req,res)=>{
 res.sendFile(path.join(__dirname,'../public/login.html'))
 })
 loginRouter.get('/dashboard',isLoggedIn,(req,res)=>{

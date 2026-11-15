@@ -77,7 +77,7 @@ viewStock()
  const editPermissions=document.getElementById('edit')
 const userRole=localStorage.getItem('role')
 
-if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+if(userRole !== 'Admin'){
   editPermissions.style.pointerEvents='none'
   editPermissions.style.opacity='0.5'
 }

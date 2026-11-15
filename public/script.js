@@ -114,7 +114,7 @@ if(loginForm){
 // // logout
 function logout(){
 
-  window.location='/login'
+  window.location='/'
 }
 // //home display
  function displayHome(){

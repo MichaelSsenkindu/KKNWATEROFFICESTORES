@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Page</title>
+    <style>
+        body{
+margin: 0;padding: 0;box-sizing: border-box;
+/* background: url(images/logo.jpeg); */
+
+        }
+        nav{
+            display: flex;align-items: center;justify-content: space-evenly;
+            .right img, 
+            .left img{width: 100px;height: 100px;margin: 20px;background-color: transparent;}
+             
+        }
+header{
+     background: green;width: 100%;padding: 10px;display: flex;justify-content: space-evenly;position: sticky; top: 0;z-index: 1000;margin: 10px;
+    a{color: white;text-decoration: none;}
+    a:hover{color: blue;}
+
+}
+ .center{
+    font-weight: bold;margin: 2px;font-size: 15px;
+    p{font-size: 25px;text-align: center;}
+   .line2{color: blue;}
+   .line3{color: grey;}
+   
+   }
+   main{
+    padding: 20px;margin: 20px;
+    .mainImg img{margin-left: 30%;}
+   
+}
+span{color: blue;text-align: center;font-size: 25px;font-family: sans-serif;font-style: italic;}
+.vision,
+.mission,
+.values{
+    h1{text-align: center;font-weight: bold;}
+    p{text-align: center;font-size: 22px;}
+    li{list-style: none;padding: 2px;font-size: 18px;font-style: italic;}
+}
+.waterRationing,
+.todaySchedule{text-align: center;
+    strong{font-size: 20px; color: red;}
+    
+}
+@media (max-width:600px){
+    nav{
+         display: flex;align-items: center;justify-content: space-evenly;
+        .right img, 
+        .left img{width: 50px;height: 50px;margin: 8px;background-color: transparent;top: 10px;
+      }
+        .center{
+ p,span{font-size: 15px;text-align: center;}
+        }       
+        }
+header{
+
+    a{color: white;text-decoration: none;font-size: 15px;}
+}
+ main{
+    .mainImg img{margin-left: 20%;margin: 10px;width: 300px;height: 300px;}
+}
+}
+    </style>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+</head>
+<body>
+<nav>
+    <div class="left">
+        <img src="images/coat_of_arms.png" alt="coat_of_arms">
+    </div>
+    <div class="center">
+        <p>MINISTRY OF WATER AND ENVIRONMENT</span> <br>
+ <span class="line2">UMBRELLA OF WATER AND SANITATION CENTRAL</span><br>
+<span class="line3">P.O.BOX 80, Wakiso. Toll free Number: 0800 388 880 <br>
+E-mail: uws-c@mwe.co.ug/ central.umbrella2011@gmail.com</span>
+</p>
+<hr>
+<h1 style="color: blue;text-align: center;">KALAGI WATER OFFICE (KKN)</h1>
+    </div>
+    <div class="right">
+        <img src="images/logo.jpeg" alt="
+        logo">
+    </div>
+</nav>
+<header>
+    <a href="landingPage.html">HOME</a>
+    <a href="login.html">KKN STORES</a>
+    <a href="#" onclick="showSection('vision')">VISION</a>
+    <a href="#" onclick="showSection('mission')">MISSION</a>
+    <a href="#" onclick="showSection('values')">VALUES</a>
+</header>
+<main>
+    <div id="info" class="info" style="text-align: center;font-size: 25px;font-weight: bold;"></div>
+    <h2 id="todaySchedule" class="todaySchedule">Today's Water Schedule <br></h2>
+    <div class="waterRationing" id="waterRationing">faadgh</div>
+    <div class="mainImg" id="mainImg">
+    <img src="images/logo.jpeg">
+    </div>
+    <div id="vision" class="vision" hidden>
+        <h1>VISION</h1>
+        <p>Sound Management and sustainable <br>Utilization of Water and Environment for <br>the betterment of the population of uganda</span></p>
+    </div>
+    <div id="mission" class="mission" hidden>
+        <h1>MISSION</h1>
+        <p>To Ensure high-quality,Sustainable,<br> and cost-effective water supply and sanitation <br> service provision for all.</p>
+    </div>
+    <div id="values" class="values" hidden>
+        <h1>VALUES</h1>
+        <p>
+            <li><strong style="font-size: 25px;">Intergrity</strong>: Acting Honestly and Responsibly in all Operations.</li>
+            <li><strong style="font-size: 25px;">Transparency</strong>: Remaining Open about how water services and resources are managed.</li>
+            <li><strong style="font-size: 25px;">Innovativeness</strong>: Finding better ways to deliver safe water to more people.</li>
+            <li><strong style="font-size: 25px;">Customer Care</strong>: Listening to customers and responding to their needs promptly.</li>
+            <li><strong style="font-size: 25px;">Effectiveness</strong>: Delivering reliable services that make a tangible difference.</li>
+            <li><strong style="font-size: 25px;">Teamwork</strong>: Working closely with communities,the Ministry, and  sector partners.</li>
+        </p>
+    </div>
+    
+</main>
+<script>
+    //landingPage
+const info=[
+    "VISION: <span>Sound Management and sustainable <br>Utilization of Water and Environment for <br>the betterment of the population of uganda</span>",
+    "MISSION:<span>To Ensure high-quality,Sustainable,<br> and cost-effective water supply and sanitation <br> service provision for all.</span>",
+    "SLOGAN:<span>Safe Water For All </span>"
+  ]
+ let index=0
+
+function showInfo(){
+document.getElementById('info').innerHTML=info[index]
+index++
+if(index >=info.length){
+  index=0
+  
+}
+
+}
+showInfo()
+setInterval(() => {
+  showInfo() 
+}, 3000);
+//showsection
+function showSection(sectionId){
+    document.getElementById('mission').hidden=true
+    document.getElementById('vision').hidden=true
+    document.getElementById('values').hidden=true
+    document.getElementById('mainImg').hidden=true
+    document.getElementById('info').hidden=true
+    document.getElementById('todaySchedule').hidden=true
+    document.getElementById('waterRationing').hidden=true
+    document.getElementById(sectionId).hidden=false
+}
+//waterRatioing
+const waterRatioing1=[
+    "<strong>Kabembe Areas:</strong><br>Namirembe,Lugali,Mabuye,Katega Lower,Kabembe Town",
+    "<br><strong>Kalagi Areas:</strong><br>Kalagala,Dundu,Kyabakadde Lower,Kakoola,Nkakwa,Nkonge A,Bulimu,Mulajje,Kiyunga Upper,Kibuye Upper"
+]
+const waterRatioing2=[
+    "<strong>Kabembe Areas:</strong>Lugamba,Kikandwa,Migo,Kabembe Upper Town,Katega Upper",
+    "<br><strong>Kalagi Areas:</strong>Bulijjo,Lukuusi,Kigagga Zone,Kibuye lower,Kiyunga lower,Nagalama,Wabikokooma,Gomba,Kazinga,Gwendide,Kalagi Upper Town,Kirwanyamuli,Nkonge B,Kitanda"
+]
+const waterRatioing3=[
+    "<strong>Kabembe Areas:</strong>Mbaliga,Migo,Kanganda,Kateete,Kabembe Upper Town",
+    "<br><strong>Kalagi Areas:</strong>Kyampisi,Kyabakadde Upper,Kasala,Kibalizi Road,Nakanyonyi Road,Bengaz,Kazinga,Kalagi Upper Town,Kirwanyamuli,Bunyiri,Nalya,Kitanda,Nkonge B"
+]
+
+ 
+function showRationing(){
+   const today = new Date()
+ document.getElementById('todaySchedule').innerHTML+= today.toLocaleDateString('en-GB',
+{
+    weekday:'long',
+    day:'numeric',
+    month:'long',
+    year:'numeric'
+
+})
+//assign dates to which array to display
+const day=today.getDate()
+let i= day % 3 
+if(i==1){
+document.getElementById('waterRationing').innerHTML=waterRatioing2
+}
+if(i==2){
+    document.getElementById('waterRationing').innerHTML=waterRatioing3
+
+}
+if(i==0){
+    document.getElementById('waterRationing').innerHTML=waterRatioing1
+
+}
+
+
+}
+showRationing()
+   
+</script>
+<script src="/script.js"></script>
+</body>
+</html>

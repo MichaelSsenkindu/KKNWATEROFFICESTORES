@@ -68,7 +68,7 @@ return alert(data.message)
 const deletePermissions=document.getElementById('delete')
 const userRole=localStorage.getItem('role')
 
-if(userRole !== 'Admin' && userRole !== 'Operations Manager'){
+if(userRole !== 'Admin'){
   deletePermissions.style.pointerEvents='none'
   deletePermissions.style.opacity='0.5'
 }
